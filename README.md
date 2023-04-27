@@ -236,4 +236,4 @@ ANNO0OONNA1O11001\n
 
 ## Sources
 Github: [gitbub link](https://github.com/TaokyleYT/LogicGate/)<br>
-Esolang wiki: [LogicGate](https://esolangs.org/wiki/LogicGate)
+Esolang wiki: [LogicGate](https://esolangs.org/wiki/LogicGate)# LogicGate
