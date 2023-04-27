@@ -4,7 +4,7 @@ from sys import getrecursionlimit as maxcur
 from math import sqrt
 from random import randint
 try:
-  exec(f'import {"LogicGate" if (__name__=="__main__") else "".join(str(__name__).rsplit("lgEncrypt", 1))+"LogicGate"} as lg')
+  exec(f'import {"LogicGate" if (__name__=="__main__") else "".join(str(__name__).rsplit("".join((__file__.split("/")[-1]).rsplit(".py", 1)), 1))+"LogicGate"} as lg')
 except ModuleNotFoundError:
   raise ImportError('lgEncrypt module require LogicGate, LogicGate not found')
 except ImportError:
