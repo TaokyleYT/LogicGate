@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "LogicGate"
+version = "0.1.3"
+description = "an esolang designed for manual encryption with logic gates"
+license = "MIT"
+authors = ["Taokyle <taokyle415@gmail.com>"]
+readme = "README.rst"
+repository = "https://replit.com/@s3D27ZHOU/LogicGate"
+packages = [
+    { include = "LogicGate.py", from = "LogicGate" },
+    { include = "lgEncrypt.py", from = "LogicGate"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.urls]
+"github" = "https://github.com/TaokyleYT/LogicGate"
+"up-to-date source code(replit)" = "https://replit.com/@s3D27ZHOU/LogicGate"
+"esolang wiki" = "https://esolangs.org/wiki/LogicGate"
