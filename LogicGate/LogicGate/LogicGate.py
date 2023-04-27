@@ -128,6 +128,7 @@ def run(
     sys.stdout = open(os.devnull, 'w')
   if exists(filename):
     with open(filename, 'r') as f:
+      f.seek(0,0)
       Out = [[]]
       dt = f.readlines()
       if filename[-6:] != '.lgeso':

@@ -6,9 +6,10 @@ from random import randint
 try:
   exec(f'import {"LogicGate" if (__name__=="__main__") else "".join(str(__name__).rsplit("".join((__file__.split("/")[-1]).rsplit(".py", 1)), 1))+"LogicGate"} as lg')
 except ModuleNotFoundError:
-  raise ImportError('lgEncrypt module require LogicGate, LogicGate not found')
+  raise ImportError('module require LogicGate, LogicGate not found')
 except ImportError:
-  raise ImportError('lgEncrypt module require LogicGate, LogicGate not found')
+  raise ImportError('module require LogicGate, LogicGate not found')
+print(f'{"".join((__file__.split("/")[-1]).rsplit(".py", 1))} module is still in dev mode, highly unstable performance may be resulted.\n\n\n')
 
 
   
@@ -67,13 +68,17 @@ def encrypt(filename:str = "main.lgeso", key_file:str = "key.lgeso", msg:str = "
 def decrypt(filename:str, key_file:str, sause:bool=False):
   "basic decryption, filename and keyfile is required, and if sause is True, no printing will happen but result given"
   if exists(filename) and exists(key_file):
-    with open(filename, 'r') as f, open(key_file, 'r') as k, open('__decrypt__.lgeso', 'w') as df, open('__decrypt2__.lgeso', 'w') as dk, open('__decrypt3__.lgeso', 'w') as do:
+    with open(filename, 'r') as f, open(key_file, 'r') as k:
+      df=open('__decrypt__.lgeso', 'w')
+      dk=open('__decrypt2__.lgeso', 'w')
       Fdt = f.read()
       Kdt = k.read()
       df.write(Fdt)
       dk.write(Kdt)
-      out = lg.run('__decrypt__.lgeso', gate=True, check=(DEB:=lg.run('__decrypt2__.lgeso', ascii=True, out=True)), out=True).split('-')
-      print(repr(out), repr(DEB))
+      df.close()
+      dk.close()
+      out = lg.run('__decrypt__.lgeso', gate=True, check=lg.run('__decrypt2__.lgeso', ascii=True, out=False), out=False).split('-')
+      do=open('__decrypt__.lgeso', 'w')
       out = ''.join(out)
       outP = []
       for Oidx, O in enumerate(out):
@@ -84,10 +89,10 @@ def decrypt(filename:str, key_file:str, sause:bool=False):
         do.write("\n".join(n))
         do.write("\n---\n")
       print('\n\n\n')
-      uh = lg.run('__decrypt3__.lgeso', gate=True, out=not sause)
-      #remove('__decrypt__.lgeso')
-      #remove('__decrypt2__.lgeso')
-      #remove('__decrypt3__.lgeso')
+      do.close()
+      uh = lg.run('__decrypt__.lgeso', gate=True, out=not sause)
+      remove('__decrypt__.lgeso')
+      remove('__decrypt2__.lgeso')
       return uh
   else:
     print("filename or key_file doesn't exist, exiting")
