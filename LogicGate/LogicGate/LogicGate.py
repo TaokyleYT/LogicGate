@@ -154,7 +154,7 @@ def run(
             sys.stdout = sys.__stdout__
             raise OverflowError(f'too many commands in line {dtidx+1}, more than max command on this os ({sys.getrecursionlimit()} commands per line), process overflowed, exited')
       hold = ""
-      checkRet = ""
+      checkOut = ""
       checkhold = []
       if check:
         for char in check:
@@ -162,6 +162,7 @@ def run(
       if gate:
         print('gates result:')
       for nidx, n in enumerate(Out):
+        checkOut+='-'
         Nhold = n.copy()
         if n == []:
           continue
@@ -176,21 +177,21 @@ def run(
             if ascii and check:
               if nidx >= len(checkhold):
                 n[chekidx] = f'\033[0;37;41m{chek}\033[0;37;40m'
-                checkRet += str(chek)
+                checkOut+=chek
               else:
                 if len(n) > len(checkhold[nidx]):
                   for _ in range(len(n)-len(checkhold[nidx])):
                     checkhold[nidx] = '0' + checkhold[nidx]
                 if chek != checkhold[nidx][chekidx]:
                   n[chekidx] = f'\033[0;37;41m{chek}\033[0;37;40m'
-                  checkRet += str(chek)
+                  checkOut+=chek
                 else:
                   n[chekidx] = f'\033[0;37;42m{chek}\033[0;37;40m'
           if nidx < len(checkhold):
             if len(n) < len(checkhold[nidx]):
               for x in checkhold[nidx][len(n):]:
                 n.append(f'\033[0;37;{"46" if int(x) else "45"}m▯\033[0;37;40m')
-                checkRet += ('0' if int(x) else '1')
+                checkOut+='0' if int(x) else '1'
           n.append(' ')
           print(''.join(n))
         if ascii:
@@ -200,13 +201,12 @@ def run(
             print(
               f'unacceptable ascii result received, ascii code: {"".join(Nhold), 2}'
             )
-        checkRet += '-'
       if ascii:
         print("\nAscii converted result:\n" + hold)
         if gate and check:
           print('\nExpected result:\n' + check)
       sys.stdout = sys.__stdout__
-      return checkRet if (check and ascii and gate) else (hold if ascii else 0)
+      return checkOut if (check and gate and ascii) else hold if ascii else 0
   else:
     sys.tracebacklimit = 0
     sys.stdout = sys.__stdout__

@@ -23,6 +23,8 @@ def encrypt(filename:str = "main.lgeso", key_file:str = "key.lgeso", msg:str = "
 
   k, f, kOut, fOut = ['']*4
   data = []
+  chekK = []
+  chekF = []
   for char in msg:
     data.append(str(bin(ord(char))[2:]))
   for i in data:
@@ -32,8 +34,9 @@ def encrypt(filename:str = "main.lgeso", key_file:str = "key.lgeso", msg:str = "
       i = '0'*(7-len(i)) + i
     for idx, char in enumerate(i):
       while randint(0, 1)==randint(0, 1):
-        k += str(char)
-        f += str(char)
+        rand = randint(0, 1)
+        k += str(rand)
+        f += str(rand)
       k += '0' if int(char) else '1'
       f += str(char)
     while char:=randint(0, 1)==randint(0, 1):
@@ -44,22 +47,31 @@ def encrypt(filename:str = "main.lgeso", key_file:str = "key.lgeso", msg:str = "
       f = '0'*(7-(len(f)%7)) + f
     tempK = []
     tempF = []
-    for Kidx, Kobj in enumerate(k):
-      if Kidx%7==0:
-        tempK.append([])
-      tempK[-1] += str(Kobj)
-    for Fidx, Fobj in enumerate(f):
-      if Fidx%7==0:
-        tempF.append([])
-      tempF[-1] += str(Fobj)
+    for kIdx in range(0, len(k), 7):
+      tempK.append(k[kIdx:kIdx+7])
+    for fIdx in range(0, len(f), 7):
+      tempF.append(f[fIdx:fIdx+7])
     if len(tempF) != len(tempK):
       raise SystemError("length of passes doesn't match, internal error raised")
-    else:
-      pass
+    chekF.append(''.join(tempF))
+    chekK.append(''.join(tempK))
     for ko in tempK:
       kOut += chr(int(str(''.join(ko)), 2))
     for fo in tempF:
       fOut += chr(int(str(''.join(fo)), 2))
+  checkBuf = []
+  check = []
+  for fChek, kChek in zip(chekF, chekK):
+    for objF, objK in zip(fChek, kChek):
+      if objK!=objF:
+        checkBuf.append(objF)
+  for chek in range(0, len(checkBuf), 7):
+    check.append(checkBuf[chek:chek+7])
+  for n in range(0, len(data)-1):
+    if str(data[n]) != ''.join(check[n]):
+      
+      print('BitWarning: bit unaligned\ndata bit : compile bit\n'+str(data[n])+
+          ' : '+''.join(check[n]))
   lg.compile(filename, fOut, random_range=(10, sqrt(maxcur())//3), override=True)
   lg.compile(key_file, kOut, random_range=(10, sqrt(maxcur())//3), override=True)
         
@@ -78,13 +90,12 @@ def decrypt(filename:str, key_file:str, sause:bool=False):
       df.close()
       dk.close()
       out = lg.run('__decrypt__.lgeso', gate=True, check=lg.run('__decrypt2__.lgeso', ascii=True, out=False), out=False).split('-')
+      input(out)
       do=open('__decrypt__.lgeso', 'w')
       out = ''.join(out)
       outP = []
-      for Oidx, O in enumerate(out):
-        if Oidx%7 == 0:
-          outP.append([])
-        outP[-1] += str(int(O))
+      for O in range(0, len(out), 7):
+        outP.append(out[O:O+7])
       for n in outP:
         do.write("\n".join(n))
         do.write("\n---\n")
