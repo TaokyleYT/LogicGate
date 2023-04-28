@@ -12,18 +12,30 @@ sounds difficult and indeed it is.
 Startup
 -------
 
-First, make a logic gate file. The file extension should be lgeso also
+First, make a logic gate file. The file extension should be lgeso
 
 Runner
 ------
 
 To use it, import the python file **LogicGate.py** in your python
-script, or just run the LogicGate.py Remember for the run function, only
+script, or just run the LogicGate.py.
+Remember for the run function, only
 the filename argument is needed. The run function will return an exit
 code if you use the run function, and outputs of the file will be
-printed(binary to ascii, and logical binary if enabled) The compile
+printed(binary to ascii, and logical binary if enabled). The compile
 function does the otherwise, it doesn’t return anything but it can write
 code into lgeso file.
+
+Special encrypt module
+----------------------
+a special encrypt module is included in this package, which is lgEncrypt.py. 
+it contain two functions, encrypt() and decrypt().
+encrypt() generates a key file and a data file, they are pure random string when transfered to ascii, but shows message when both being processed by decrypt()
+encrypth) have 3 arguments, data file name, key file name, message
+They are very self explainatory
+
+decrypt() have 3 arguments, data file, key file, sause
+the first 2 is very self explainatory, for sause parameter it determinates if the output text is shown or returned for further decryption, assuming the message through encrypt() is encrypted beforehand
 
 syntax
 ------
@@ -57,7 +69,7 @@ There are 2 special syntax
 —-- (three hyphens): new word, used for the ascii output separating the
 binary for ascii translation
 
-### (three hashes): comment the entire line
+### (three hashes): comment everything after the syntax
 
 For any of the special syntax, they are not being interpreted as special
 syntax unless the entire syntax appears. They can be anywhere in a line,

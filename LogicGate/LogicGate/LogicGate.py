@@ -40,6 +40,9 @@ def run(
     if debug: print('called, args:', obj, line, aft, an)
     if len(str(obj)) == 1:  #if the first process string is a single command
       obj = str(obj)
+      if obj == "#":
+        if aft[:2] == '##':
+          return
       AnList = None
       if an != None:
         #if AnList exists, it is an and/or gate, depends on the first index is True(and) or False(or)
@@ -140,8 +143,6 @@ def run(
         line = line.replace('\n', '')
         if '---' in line:
           Out.append([])
-        elif '###' in line:
-          continue
         else:
           try:
             Out[-1].append(
@@ -221,7 +222,8 @@ def compile(
   randomize: bool = True,
   random_range: list = [1, 5],
   write:bool = True,
-  override:bool = False
+  override:bool = False,
+  BitLock:int = -1
 ) -> None:  #I swear if this thing returns anything somehow somewhere and somewhat, python is dying or my brain is dying
   """compile string to lgeso file, random_range is needed only when randomize is true.
   filename: string, specify which file to write the data into, new file named as filename will be created if it doesn't exist
@@ -229,7 +231,8 @@ def compile(
   randomize: boolean, if the data written is pure binary or further encrypted with gates
   random_range: list, the maximum set of gates in the written data will be the square of the second item while the minimum will be the square of the first item.
   write: boolean, if the result is returned or is written to file
-  override: boolean, safety checks are off, proceed with caution"""
+  override: boolean, safety checks are off, proceed with caution
+  BitLock: integer, if the binary of a character is shorter than this value, 0 will be appended. Defalt is -1, which is off, all negative number will be counted as ignore as well"""
 
   out = ""
   override = not override
@@ -271,6 +274,9 @@ def compile(
           break
     for char in output:
       line = str(bin(ord(char))[2:])
+      if len(line) < BitLock and BitLock >= 0:
+        for _ in range(BitLock-len(line)):
+          line = '0'+line
       for char in line:
         if randomize:
           charGoal = int(char)  #the ideal final output after the randomizing
