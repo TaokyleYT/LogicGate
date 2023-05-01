@@ -12,7 +12,7 @@ def run(
   debug: bool = False,  #log during process
   check: str = '',  #check for error in code, mostly for debug
   out: bool = True
-) -> int:  #returns exit code for some reason lol
+):
   """To run this filename is the only thing needed, Error will be raised and nothing will return if something went wrong. If ascii is on, it will return the ascii result, otherwise 0.
   
   Arguments, type of input, usecases:
