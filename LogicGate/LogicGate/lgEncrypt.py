@@ -21,6 +21,8 @@ def encrypt(filename:str = "main.lgeso", key_file:str = "key.lgeso", msg:str = "
   msg: string, word to encrypt
   """
 
+  if not msg.isascii():
+    raise ValueError(f'message received ({repr(msg)}) is not available in ascii')
   k, f, kOut, fOut = ['']*4
   data = []
   chekK = []

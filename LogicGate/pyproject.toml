@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "LogicGate"
-version = "0.2.1"
+version = "0.2.5"
 description = "an esolang designed for manual encryption with logic gates"
 license = "MIT"
 authors = ["Taokyle <taokyle415@gmail.com>"]

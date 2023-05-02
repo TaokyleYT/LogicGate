@@ -134,7 +134,7 @@ def run(
       f.seek(0,0)
       Out = [[]]
       dt = f.readlines()
-      if filename[-6:] != '.lgeso':
+      if not filename.endswith('.lgeso'):
         sys.tracebacklimit = 0
         sys.stdout = sys.__stdout__
         raise NameError(
@@ -236,6 +236,8 @@ def compile(
 
   out = ""
   override = not override
+  if not output.isascii() and override:
+    raise ValueError(f'message received ({repr(output)}) is not available in ascii')
   if not output and override:
     output = 'Hello World!'
   if filename and write and override:
