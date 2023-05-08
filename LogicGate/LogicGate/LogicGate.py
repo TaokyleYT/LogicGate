@@ -169,7 +169,7 @@ def run(
           continue
         if gate:
           for chekidx, chek in enumerate(n):
-            if '\033[0;37;41m' in chek and '\033[0;37;40m' in chek:
+            if '\033[0;37;40m' in chek:
               continue
             if chek != '1' and chek != '0' and chek != ' ':
               print(

@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.ccache
     pkgs.twine
     pkgs.python310Full
     pkgs.replitPackages.prybar-python310

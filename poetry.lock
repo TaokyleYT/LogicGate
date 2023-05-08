@@ -256,12 +256,35 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "nuitka"
+version = "1.5.7"
+description = "Python compiler with full language support and CPython compatibility"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+ordered-set = ">=4.1.0"
+zstandard = ">=0.15"
+
+[[package]]
 name = "numpy"
 version = "1.24.2"
 description = "Fundamental package for array computing in Python"
 category = "main"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "ordered-set"
+version = "4.1.0"
+description = "An OrderedSet is a custom MutableSet that remembers its order, so that every"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+dev = ["pytest", "black", "mypy"]
 
 [[package]]
 name = "packaging"
@@ -576,10 +599,24 @@ python-versions = ">=3.7"
 idna = ">=2.0"
 multidict = ">=4.0"
 
+[[package]]
+name = "zstandard"
+version = "0.21.0"
+description = "Zstandard bindings for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+cffi = {version = ">=1.11", markers = "platform_python_implementation == \"PyPy\""}
+
+[package.extras]
+cffi = ["cffi (>=1.11)"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10.0,<3.11"
-content-hash = "b9c0c3dbef3db4f4cac93a239fd87e8de19a10050fac4e09ea2fa37ca3958f9d"
+content-hash = "d1ac98a075c6baed3c90a234150c9cfdd3a0d4d156f6e4b5eea2209611559f76"
 
 [metadata.files]
 aiohttp = []
@@ -604,7 +641,9 @@ jedi = []
 jinja2 = []
 markupsafe = []
 multidict = []
+nuitka = []
 numpy = []
+ordered-set = []
 packaging = []
 parso = []
 passlib = []
@@ -630,3 +669,4 @@ werkzeug = []
 whatthepatch = []
 yapf = []
 yarl = []
+zstandard = []
