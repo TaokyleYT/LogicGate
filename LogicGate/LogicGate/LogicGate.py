@@ -39,7 +39,7 @@ def run(
     'One line code processor, return one output from a line of input, internal use only'
     if debug: print('called, args:', obj, line, aft, an)
     if len(str(obj)) == 1:  #if the first process string is a single command
-      obj = str(obj)
+      obj = str(obj).upper()
       if obj == "#":
         if aft[:2] == '##':
           return
