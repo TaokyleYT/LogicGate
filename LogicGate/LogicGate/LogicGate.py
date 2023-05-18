@@ -6,13 +6,12 @@ from math import sqrt
 
 
 def run(
-  filename: str,
-  gate: bool = False,  #show gate in result
-  ascii: bool = True,  #show ascii in result
-  debug: bool = False,  #log during process
-  check: str = '',  #check for error in code, mostly for debug
-  out: bool = True
-):
+    filename: str,
+    gate: bool = False,  #show gate in result
+    ascii: bool = True,  #show ascii in result
+    debug: bool = False,  #log during process
+    check: str = '',  #check for error in code, mostly for debug
+    out: bool = True):
   """To run this filename is the only thing needed, Error will be raised and nothing will return if something went wrong. If ascii is on, it will return the ascii result, otherwise 0.
   
   Arguments, type of input, usecases:
@@ -124,21 +123,21 @@ def run(
         'Internal error, unexpected arguments received in internal helper function, please do not change the code'
       )
 
-  
   if out:
     sys.stdout = sys.__stdout__
   else:
     sys.stdout = open(os.devnull, 'w')
   if exists(filename):
     with open(filename, 'r') as f:
-      f.seek(0,0)
+      f.seek(0, 0)
       Out = [[]]
       dt = f.readlines()
       if not filename.endswith('.lgeso'):
         sys.tracebacklimit = 0
         sys.stdout = sys.__stdout__
         raise NameError(
-          f'{filename} is not an lgeso file, maybe renaming the file extension to lgeso and try again')
+          f'{filename} is not an lgeso file, maybe renaming the file extension to lgeso and try again'
+        )
       for dtidx, line in enumerate(dt):
         line = line.replace('\n', '')
         if '---' in line:
@@ -146,14 +145,16 @@ def run(
         else:
           try:
             Out[-1].append(
-            str(
-              process(line[0],
-                      line=(dtidx + 1, 1),
-                      aft=(None if len(line) == 1 else line[1:]))[0]))
+              str(
+                process(line[0],
+                        line=(dtidx + 1, 1),
+                        aft=(None if len(line) == 1 else line[1:]))[0]))
           except OverflowError:
             sys.tracebacklimit = 0
             sys.stdout = sys.__stdout__
-            raise OverflowError(f'too many commands in line {dtidx+1}, more than max command on this os ({sys.getrecursionlimit()} commands per line), process overflowed, exited')
+            raise OverflowError(
+              f'too many commands in line {dtidx+1}, more than max command on this os ({sys.getrecursionlimit()} commands per line), process overflowed, exited'
+            )
       hold = ""
       checkOut = ""
       checkhold = []
@@ -163,7 +164,7 @@ def run(
       if gate:
         print('gates result:')
       for nidx, n in enumerate(Out):
-        checkOut+='-'
+        checkOut += '-'
         Nhold = n.copy()
         if n == []:
           continue
@@ -178,21 +179,22 @@ def run(
             if ascii and check:
               if nidx >= len(checkhold):
                 n[chekidx] = f'\033[0;37;41m{chek}\033[0;37;40m'
-                checkOut+=chek
+                checkOut += chek
               else:
                 if len(n) > len(checkhold[nidx]):
-                  for _ in range(len(n)-len(checkhold[nidx])):
+                  for _ in range(len(n) - len(checkhold[nidx])):
                     checkhold[nidx] = '0' + checkhold[nidx]
                 if chek != checkhold[nidx][chekidx]:
                   n[chekidx] = f'\033[0;37;41m{chek}\033[0;37;40m'
-                  checkOut+=chek
+                  checkOut += chek
                 else:
                   n[chekidx] = f'\033[0;37;42m{chek}\033[0;37;40m'
           if nidx < len(checkhold):
             if len(n) < len(checkhold[nidx]):
               for x in checkhold[nidx][len(n):]:
-                n.append(f'\033[0;37;{"46" if int(x) else "45"}m▯\033[0;37;40m')
-                checkOut+='0' if int(x) else '1'
+                n.append(
+                  f'\033[0;37;{"46" if int(x) else "45"}m▯\033[0;37;40m')
+                checkOut += '0' if int(x) else '1'
           n.append(' ')
           print(''.join(n))
         if ascii:
@@ -221,9 +223,9 @@ def compile(
   output: str = 'Hello World!',
   randomize: bool = True,
   random_range: list = [1, 5],
-  write:bool = True,
-  override:bool = False,
-  BitLock:int = -1
+  write: bool = True,
+  override: bool = False,
+  BitLock: int = -1
 ) -> None:  #I swear if this thing returns anything somehow somewhere and somewhat, python is dying or my brain is dying
   """compile string to lgeso file, random_range is needed only when randomize is true.
   filename: string, specify which file to write the data into, new file named as filename will be created if it doesn't exist
@@ -237,7 +239,8 @@ def compile(
   out = ""
   override = not override
   if not output.isascii() and override:
-    raise ValueError(f'message received ({repr(output)}) is not available in ascii')
+    raise ValueError(
+      f'message received ({repr(output)}) is not available in ascii')
   if not output and override:
     output = 'Hello World!'
   if filename and write and override:
@@ -256,7 +259,8 @@ def compile(
       print(f'filename is not an lgeso file, filename changed to {filename}')
       filename = 'main.lgeso'
   with open(filename, 'w') as f:
-    if (len(random_range) != 2 or random_range[0] > random_range[1]) and override:
+    if (len(random_range) != 2
+        or random_range[0] > random_range[1]) and override:
       print('invalid random range received, changed to 1-5')
       random_range = [1, 5]  #when the random_range is not correctly formatted
     for checkidx, check in enumerate(random_range):
@@ -268,7 +272,8 @@ def compile(
           random_range = [1, 5]
           break
       else:
-        if (check < 1 or check > (sqrt(sys.getrecursionlimit())//3)) and override:  #avoid overflow error when running
+        if (check < 1 or check > (sqrt(sys.getrecursionlimit()) // 3)
+            ) and override:  #avoid overflow error when running
           print(
             'an item in random range is too large or too small, changed to 1-5'
           )
@@ -277,8 +282,8 @@ def compile(
     for char in output:
       line = str(bin(ord(char))[2:])
       if len(line) < BitLock and BitLock >= 0:
-        for _ in range(BitLock-len(line)):
-          line = '0'+line
+        for _ in range(BitLock - len(line)):
+          line = '0' + line
       for char in line:
         if randomize:
           charGoal = int(char)  #the ideal final output after the randomizing
