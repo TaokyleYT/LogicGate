@@ -6,6 +6,7 @@ license = "MIT"
 authors = ["Taokyle <taokyle415@gmail.com>"]
 readme = "README.rst"
 repository = "https://replit.com/@s3D27ZHOU/LogicGate"
+keywords = ["logic", "gate", "encrypt", "encryption"]
 packages = [
     { include = "LogicGate.py", from = "LogicGate" },
     { include = "lgEncrypt.py", from = "LogicGate"}
