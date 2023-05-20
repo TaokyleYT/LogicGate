@@ -1,5 +1,6 @@
 { pkgs }: {
   deps = [
+    pkgs.python39Packages.pipx
     pkgs.ccache
     pkgs.twine
     pkgs.python310Full
