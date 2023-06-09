@@ -5,14 +5,14 @@ from random import randint
 from math import sqrt
 
 
-def run(
+def decompile(
     filename: str,
-    gate: bool = False,  #show gate in result
-    ascii: bool = True,  #show ascii in result
-    debug: bool = False,  #log during process
-    check: str = '',  #check for error in code, mostly for debug
+    gate: bool = False,
+    ascii: bool = True,
+    debug: bool = False,
+    check: str = '',
     out: bool = True):
-  """To run this filename is the only thing needed, Error will be raised and nothing will return if something went wrong. If ascii is on, it will return the ascii result, otherwise 0.
+  """To run this, filename is the only thing needed, Error will be raised and nothing will return if something went wrong. It will return the wrong bits if check, gate and ascii is on, decrypted result if ascii is on, or 0 otherwise.
   
   Arguments, type of input, usecases:
       filename: string, specify which file needed to run
@@ -24,7 +24,7 @@ def run(
                      red=incorrect bit
                      blue box=missing bit 1
                      purple box=missing bit 0)
-      out: boolean, enable for outputs
+      out: boolean, it is seldom called as the silent argument, enable it for outputs, will not change return value
                      """
 
   def process(
@@ -41,7 +41,7 @@ def run(
       obj = str(obj).upper()
       if obj == "#":
         if aft[:2] == '##':
-          return
+          return ('', '')
       AnList = None
       if an != None:
         #if AnList exists, it is an and/or gate, depends on the first index is True(and) or False(or)
@@ -88,6 +88,10 @@ def run(
             AnList.append(proc)
           else:
             return tuple(proc)
+        elif obj != "0" and obj != "1":
+          sys.tracebacklimit = 0
+          sys.stdout = sys.__stdout__
+          raise SyntaxError(f'Invalid gate {obj} in line {line[0]} index {line[1]}')
       if AnList != None:
         if debug: print('And/Or gate:', AnList)
         try:
@@ -226,7 +230,7 @@ def compile(
   write: bool = True,
   override: bool = False,
   BitLock: int = -1
-) -> None:  #I swear if this thing returns anything somehow somewhere and somewhat, python is dying or my brain is dying
+) -> str | None:
   """compile string to lgeso file, random_range is needed only when randomize is true.
   filename: string, specify which file to write the data into, new file named as filename will be created if it doesn't exist
   output: string, specify what result will be produced
@@ -313,6 +317,39 @@ def compile(
     )
     return None if write else out
 
+
+def run(
+    filename: str,
+    gate: bool = False,
+    ascii: bool = True,
+    debug: bool = False,
+    check: str = '',
+    out: bool = True):
+  """NOTE: this function is just a replacement of decompile function, the function will no longer accessible with run() anymore after update 0.3.0, please change all use of this function to "decompile()" before that for any unexpected error of function not exist
+  
+  To run this filename is the only thing needed, Error will be raised and nothing will return if something went wrong. It will return the wrong bits if check, gate and ascii is on, decrypted result if ascii is on, or 0 otherwise.
+
+  
+  Arguments, type of input, usecases:
+      filename: string, specify which file needed to run
+      gate: boolean(True or False), if the result shows gate result or not
+      ascii: boolean, if the result converts to ascii and show or not
+      debug: boolean, show the unhuman log during the interpute
+      check: string, if it is specified then the result will be colored. It compares the difference between the gate result and the binary of check input, only works if both gate and ascii is True 
+             (color: green=correct bit
+                     red=incorrect bit
+                     blue box=missing bit 1
+                     purple box=missing bit 0)
+      out: boolean, it is seldom called as the silent argument, enable it for outputs, will not change return value
+                     """
+
+  print("WARNING: this function is called with the old function name 'run', please change it to 'decrypt' before update 0.3.0 when function 'run' will no longer work\n\n\n\n")
+  return decompile(filename=filename,
+                   gate=gate,
+                   ascii=ascii,
+                   debug=debug,
+                   check=check,
+                   out=out)
 
 if __name__ == '__main__':
   exit(run((str(argv[1]) if len(argv) != 1 else 'main.lgeso')))

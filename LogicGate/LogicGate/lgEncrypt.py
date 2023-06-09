@@ -106,10 +106,10 @@ def decrypt(filename: str, key_file: str, sause: bool = False):
       dk.write(Kdt)
       df.close()
       dk.close()
-      out = lg.run('__decrypt__.lgeso',
+      out = lg.decompile('__decrypt__.lgeso',
                    ascii=True,
                    gate=True,
-                   check=lg.run('__decrypt2__.lgeso', ascii=True, out=False),
+                   check=lg.decompile('__decrypt2__.lgeso', ascii=True, out=False),
                    out=False).split('-')
       do = open('__decrypt__.lgeso', 'w')
       out = ''.join(out)
@@ -121,10 +121,10 @@ def decrypt(filename: str, key_file: str, sause: bool = False):
         do.write("\n---\n")
       print('\n\n\n')
       do.close()
-      uh = lg.run('__decrypt__.lgeso', gate=True, out=not sause)
+      out = lg.decompile('__decrypt__.lgeso', gate=True, out=not sause)
       remove('__decrypt__.lgeso')
       remove('__decrypt2__.lgeso')
-      return uh
+      return out
   else:
     print("filename or key_file doesn't exist, exiting")
 

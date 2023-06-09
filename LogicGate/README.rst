@@ -1,8 +1,7 @@
 LogicGate
 =========
 
-This language is inspired by logic gates, by using simple alphabet you
-could make a program.
+This language is inspired by logic gates, by using simple alphabet you could make a program.
 
 It is designed as a way for manual encryption, which kinda failed
 
@@ -12,41 +11,44 @@ sounds difficult and indeed it is.
 Startup
 -------
 
-First, make a logic gate file. The file extension should be lgeso
+First, make a logic gate file. The file extension should be .lgeso
 
 Runner
 ------
 
-To use it, import the python file **LogicGate.py** in your python
-script, or just run the LogicGate.py.
-Remember for the run function, only
-the filename argument is needed. The run function will return an exit
-code if you use the run function, and outputs of the file will be
-printed(binary to ascii, and logical binary if enabled). The compile
-function does the otherwise, it doesn’t return anything but it can write
-code into lgeso file.
+To use it, import **LogicGate** in your python script.
+
+Remember for the decompile function, only the filename argument is needed.
+
+The decompile function will return the incorrect bits if check, gate and ascii is True, decompiled result if ascii is True, and 0 if otherwise.
+
+Outputs of the file will be printed(binary to ascii, and logical binary if enabled) if out is True (true by defalt).
+
+
+The compile function does the otherwise, it normally doesn't return anything but it can write code into lgeso file, or if write is False(defalt on) then the compiled result will be returned instead of writing into file.
 
 Special encrypt module
 ----------------------
-a special encrypt module is included in this package, which is lgEncrypt.py. 
-it contain two functions, encrypt() and decrypt().
-encrypt() generates a key file and a data file, they are pure random string when transfered to ascii, but shows message when both being processed by decrypt()
-encrypth) have 3 arguments, data file name, key file name, message
-They are very self explainatory
+a special encrypt module is included in this package, which is **lgEncrypt**.
 
-decrypt() have 3 arguments, data file, key file, sause
+it contain two functions, encrypt() and decrypt().
+
+encrypt() generates a key file and a data file, they are pure random string when transfered to ascii, but shows message when both being processed by decrypt(). 
+encrypt() have 3 arguments, data file name, key file name, message. They are very self explainatory
+
+decrypt() have 3 arguments, data file, key file, sause. 
 the first 2 is very self explainatory, for sause parameter it determinates if the output text is shown or returned for further decryption, assuming the message through encrypt() is encrypted beforehand
 
 syntax
 ------
 
 For syntax it is very straight forward. It process each character in
-each line as each command For gates with multiple inputs (such as or,
-and) type like other syntax, the quota for the gate will automatically
-be processed. No linking between words, unless the syntax at the middle
-is invalid
+every line as individual command.
 
-Basic gates(gates that doesn’t require includes):
+For gates with multiple inputs (such as or,
+and) type like other syntax, the quota for the gate will automatically be processed. Any invalid command will raise SyntaxError, in almost all scenarios, the case of the gate does not matter.
+
+Basic gates(gates that doesn’t require includes, include feature is in progress):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A (and gate): the next **2** results will be accepted as inputs. If both
@@ -66,15 +68,11 @@ special syntax
 
 There are 2 special syntax
 
-—-- (three hyphens): new word, used for the ascii output separating the
-binary for ascii translation
+—-- (three hyphens): new word, used for the ascii output separating the binary for ascii translation. Everything else on the line with this syntax will be ignored.
 
 ### (three hashes): comment everything after the syntax
 
-For any of the special syntax, they are not being interpreted as special
-syntax unless the entire syntax appears. They can be anywhere in a line,
-and that line will act like what the syntax shows (if the special syntax
-appears in the same line, they will be scanned and processed according
+For any of the special syntax, they are not being interpreted as special syntax unless the entire syntax appears. They can be anywhere in a line, and that line will act like what the syntax shows (if more tham one special syntax appears in the same line, they will be scanned and processed according
 to here)
 
 examples
@@ -93,7 +91,7 @@ Sources
 `gitbub
 <https://github.com/TaokyleYT/LogicGate/>`__\
 
-Esolang wiki:
+Esolang seldom outdated wiki:
 `LogicGate <https://esolangs.org/wiki/LogicGate>`__\
 
 Replit up-to-date version:
