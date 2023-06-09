@@ -49,7 +49,7 @@ For gates with multiple inputs (such as or,
 and) type like other syntax, the quota for the gate will automatically be processed. Any invalid command will raise SyntaxError, in almost all scenarios, the case of the gate does not matter.
 
 Basic gates(gates that doesn’t require includes, include feature is in progress):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A (and gate): the next **2** results will be accepted as inputs. If both
 inputs are 1, output is 1, else 0
