@@ -15,7 +15,8 @@ except ImportError:
 
 def encrypt(filename: str = "main.lgeso",
             key_file: str = "key.lgeso",
-            msg: str = "Hello World!"):
+            msg: str = "Hello World!",
+            no_output : bool = False):
   """
   an encryption module with the help of LogicGate main module, LogicGate.py is needed.
   Note: this encryption method is not safe, anyone with the data of the 2 files will be able to see the information. 
@@ -75,7 +76,7 @@ def encrypt(filename: str = "main.lgeso",
   for chek in range(0, len(checkBuf), 7):
     check.append(checkBuf[chek:chek + 7])
   for n in range(0, len(data) - 1):
-    if str(data[n]) != ''.join(check[n]):
+    if str(data[n]) != ''.join(check[n]) and not no_output:
 
       print('BitWarning: bit unaligned\ndata bit : compile bit\n' +
             str(data[n]) + ' : ' + ''.join(check[n]) + '\n')
@@ -93,23 +94,24 @@ def encrypt(filename: str = "main.lgeso",
 
 def decrypt(filename: str, key_file: str, sause: bool = False):
   """basic decryption, filename and keyfile is required.
-  If sause is True, no printing will happen but result given, normally used for another module's extra encryption
-  NOTE: 2 files, __decrypt__.lgeso and __decrypt2__.lgeso, will be used for temperary data store and bypasser for LogicGate.run lgeso file locker.
-  THE TWO FILES WILL BE CLEARED, WRITTEN AND DELETED AFTER USING THIS FUNCTON"""
+  If sause is True, no output will be give pn out but result returned, normally used for another module's extra encryption
+  NOTE: file __decrypt__.lgeso and will be used for temperary data store and bypasser for LogicGate.decompile lgeso file locker.
+  THE FILE WILL BE CLEARED, WRITTEN AND DELETED AFTER USING THIS FUNCTON"""
   if exists(filename) and exists(key_file):
     with open(filename, 'r') as f, open(key_file, 'r') as k:
-      df = open('__decrypt__.lgeso', 'w')
-      dk = open('__decrypt2__.lgeso', 'w')
+      dk = open('__decrypt__.lgeso', 'w')
       Fdt = f.read()
       Kdt = k.read()
-      df.write(Fdt)
       dk.write(Kdt)
-      df.close()
       dk.close()
+      CheckStr = lg.decompile('__decrypt__.lgeso', ascii=True, out=False)
+      df = open('__decrypt__.lgeso', 'w')
+      df.write(Fdt)
+      df.close()
       out = lg.decompile('__decrypt__.lgeso',
                    ascii=True,
                    gate=True,
-                   check=lg.decompile('__decrypt2__.lgeso', ascii=True, out=False),
+                   check=CheckStr,
                    out=False).split('-')
       do = open('__decrypt__.lgeso', 'w')
       out = ''.join(out)
@@ -119,11 +121,9 @@ def decrypt(filename: str, key_file: str, sause: bool = False):
       for n in outP:
         do.write("\n".join(n))
         do.write("\n---\n")
-      print('\n\n\n')
       do.close()
       out = lg.decompile('__decrypt__.lgeso', gate=True, out=not sause)
       remove('__decrypt__.lgeso')
-      remove('__decrypt2__.lgeso')
       return out
   else:
     print("filename or key_file doesn't exist, exiting")

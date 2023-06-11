@@ -237,7 +237,7 @@ def compile(
   randomize: boolean, if the data written is pure binary or further encrypted with gates
   random_range: list, the maximum set of gates in the written data will be the square of the second item while the minimum will be the square of the first item.
   write: boolean, if the result is returned or is written to file
-  override: boolean, safety checks are off, proceed with caution
+  override: boolean, safety checks are off and outputs are disabled, proceed with caution
   BitLock: integer, if the binary of a character is shorter than this value, 0 will be appended. Defalt is -1, which is off, all negative number will be counted as ignore as well"""
 
   out = ""
@@ -312,9 +312,10 @@ def compile(
         f.write('---\n')
       else:
         out += "-"
-    print(
-      f'compilation completed and result {"written in" if write else "returned"} {filename if write else ""} with output as {output}\nrandomizaion is {"on" if randomize else "off"}\n\n\n'
-    )
+    if override:
+      print(
+        f'compilation completed and result {"written in" if write else "returned"} {filename if write else ""} with output as {output}\nrandomizaion is {"on" if randomize else "off"}\n\n\n'
+      )
     return None if write else out
 
 
@@ -343,7 +344,7 @@ def run(
       out: boolean, it is seldom called as the silent argument, enable it for outputs, will not change return value
                      """
 
-  print("WARNING: this function is called with the old function name 'run', please change it to 'decrypt' before update 0.3.0 when function 'run' will no longer work\n\n\n\n")
+  print("LogicGate WARNING: function is called with the old function name 'run', please change it to 'decrypt' before update 0.3.0 when function 'run' will no longer work\n\n\n\n")
   return decompile(filename=filename,
                    gate=gate,
                    ascii=ascii,
