@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "LogicGate"
-version = "0.2.7"
+version = "0.2.9"
 description = "an esolang designed for manual encryption with logic gates"
 license = "MIT"
 authors = ["Taokyle <taokyle415@gmail.com>"]
@@ -25,4 +25,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.urls]
 "github" = "https://github.com/TaokyleYT/LogicGate"
 "up-to-date source code(replit)" = "https://replit.com/@s3D27ZHOU/LogicGate"
-"esolang wiki" = "https://esolangs.org/wiki/LogicGate"
+"outdated esolang wiki" = "https://esolangs.org/wiki/LogicGate"

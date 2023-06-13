@@ -6,26 +6,28 @@ This language is inspired by logic gates, by using simple alphabet you could mak
 It is designed as a way for manual encryption, which kinda failed
 
 All you can do in this language is to make a program with logic gates,
-sounds difficult and indeed it is.
+sounds difficult but it depends.
 
 Startup
 -------
 
 First, make a logic gate file. The file extension should be .lgeso
 
-Runner
-------
+Functions
+---------
+
+*Note, this README may sometimes be outdated due to how lazy and busy the dev is, for the most updated description of the function arguments please use "help({func})" and replace {func} with the function you want to check, thank you.*
 
 To use it, import **LogicGate** in your python script.
 
 Remember for the decompile function, only the filename argument is needed.
 
-The decompile function will return the incorrect bits if check, gate and ascii is True, decompiled result if ascii is True, and 0 if otherwise.
+The *decompile* function will return the incorrect bits if check, gate and ascii is True, decompiled result if ascii is True, and 0 if otherwise.
 
 Outputs of the file will be printed(binary to ascii, and logical binary if enabled) if out is True (true by defalt).
 
 
-The compile function does the otherwise, it normally doesn't return anything but it can write code into lgeso file, or if write is False(defalt on) then the compiled result will be returned instead of writing into file.
+The *compile* function does the otherwise, it normally doesn't return anything but it can write code into lgeso file, or if write is False(defalt True) then the compiled result will be returned instead of writing into file.
 
 Special encrypt module
 ----------------------
@@ -33,11 +35,12 @@ a special encrypt module is included in this package, which is **lgEncrypt**.
 
 it contain two functions, encrypt() and decrypt().
 
-encrypt() generates a key file and a data file, they are pure random string when transfered to ascii, but shows message when both being processed by decrypt(). 
-encrypt() have 3 arguments, data file name, key file name, message. They are very self explainatory
+*encrypt()* generates a key file and a data file, they are pure random string when transfered to ascii, but shows message when both being processed by decrypt(). 
+encrypt() have 4 arguments, data file name, key file name, message, output. They are very self explainatory
 
-decrypt() have 3 arguments, data file, key file, sause. 
-the first 2 is very self explainatory, for sause parameter it determinates if the output text is shown or returned for further decryption, assuming the message through encrypt() is encrypted beforehand
+*decrypt()* have 5 arguments, data file, key file, sause, debug, debug_ALL. 
+the first 2 is very self explainatory, for *sause* parameter it determinates if the output text is shown or returned for further decryption, assuming the message through encrypt() is encrypted beforehand.
+For *debug*, it shows the print output that is hidden, it can be enabled for you to check which bit is wrong. For *debug_ALL* it purposely enable everything that is coded with printing(output) except warnings and errors, this will definatly cause massive lag so it is not recommended to enable.
 
 syntax
 ------

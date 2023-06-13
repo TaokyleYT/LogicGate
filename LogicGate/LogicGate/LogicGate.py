@@ -224,29 +224,31 @@ def decompile(
 
 def compile(
   filename: str = 'main.lgeso',
-  output: str = 'Hello World!',
+  message: str = 'Hello World!',
   randomize: bool = True,
   random_range: list = [1, 5],
   write: bool = True,
+  output: bool = True,
   override: bool = False,
   BitLock: int = -1
 ) -> str | None:
   """compile string to lgeso file, random_range is needed only when randomize is true.
   filename: string, specify which file to write the data into, new file named as filename will be created if it doesn't exist
-  output: string, specify what result will be produced
+  message: string, specify what will be compiled
   randomize: boolean, if the data written is pure binary or further encrypted with gates
   random_range: list, the maximum set of gates in the written data will be the square of the second item while the minimum will be the square of the first item.
   write: boolean, if the result is returned or is written to file
+  output: boolean, determine if outputs are present
   override: boolean, safety checks are off and outputs are disabled, proceed with caution
   BitLock: integer, if the binary of a character is shorter than this value, 0 will be appended. Defalt is -1, which is off, all negative number will be counted as ignore as well"""
 
   out = ""
-  override = not override
-  if not output.isascii() and override:
+  override = not (override or not output) #variable "override" after this line is reversed for shorter code
+  if not message.isascii() and override:
     raise ValueError(
-      f'message received ({repr(output)}) is not available in ascii')
-  if not output and override:
-    output = 'Hello World!'
+      f'message received ({repr(message)}) is not available in ascii')
+  if not message and override:
+    message = 'Hello World!'
   if filename and write and override:
     if len(filename) > 6:
       if filename[-6:] != '.lgeso':
@@ -277,20 +279,20 @@ def compile(
           break
       else:
         if (check < 1 or check > (sqrt(sys.getrecursionlimit()) // 3)
-            ) and override:  #avoid overflow error when running
+            ) and override:  #avoid overflow error when decompiling
           print(
             'an item in random range is too large or too small, changed to 1-5'
           )
           random_range = [1, 5]
           break
-    for char in output:
+    for char in message:
       line = str(bin(ord(char))[2:])
       if len(line) < BitLock and BitLock >= 0:
         for _ in range(BitLock - len(line)):
           line = '0' + line
       for char in line:
         if randomize:
-          charGoal = int(char)  #the ideal final output after the randomizing
+          charGoal = int(char)  #the expected bit after the randomizing
           for _ in range(
               randint(random_range[0], random_range[1]) *
               randint(random_range[0], random_range[1])):
@@ -312,9 +314,9 @@ def compile(
         f.write('---\n')
       else:
         out += "-"
-    if override:
+    if output:
       print(
-        f'compilation completed and result {"written in" if write else "returned"} {filename if write else ""} with output as {output}\nrandomizaion is {"on" if randomize else "off"}\n\n\n'
+        f'compilation completed and result {"written in" if write else "returned"} {filename if write else ""} with output as {message}\nrandomizaion is {"on" if randomize else "off"}\n\n\n'
       )
     return None if write else out
 
@@ -353,4 +355,4 @@ def run(
                    out=out)
 
 if __name__ == '__main__':
-  exit(run((str(argv[1]) if len(argv) != 1 else 'main.lgeso')))
+  exit(decompile((str(argv[1]) if len(argv) != 1 else 'main.lgeso')))
